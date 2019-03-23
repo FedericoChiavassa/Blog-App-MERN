@@ -22,20 +22,14 @@ class AppNavbar extends Component {
         });
     }
 
-    close = () => {
-        this.setState({
-          isOpen: false
-        });
-    }
-
     render() {
         return (
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">
                     <Container>
-                        <NavbarBrand tag={Link} to="/" onClick={this.close}>BloggApp</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle}></NavbarToggler>
-                        <Collapse isOpen={this.state.isOpen} onClick={this.toggle} navbar>
+                        <NavbarBrand tag={Link} to="/">BloggApp</NavbarBrand>
+                        <NavbarToggler onClick={this.toggle} />
+                        <Collapse isOpen={this.state.isOpen}  navbar>
                             <Nav className="mr-auto" navbar>
                                 <NavItem>
                                     <NavLink tag={Link} to="/posts">Posts</NavLink>
