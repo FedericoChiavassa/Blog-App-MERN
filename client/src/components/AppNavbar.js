@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
     Collapse,
     Navbar,
@@ -31,10 +31,10 @@ class AppNavbar extends Component {
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="mr-auto" navbar>
                                 <NavItem>
-                                    <NavLink href="#">Posts</NavLink>
+                                    <NavLink href="/posts">Posts</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="#">About</NavLink>
+                                    <NavLink href="/about">About</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
