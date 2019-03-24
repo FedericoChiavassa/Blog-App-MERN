@@ -9,7 +9,7 @@ const Post = require('../../models/Post');
 // @access  Public
 router.get('/', (req, res) => {
     Post.find()
-        .sort({date: -1})
+        .sort({created_at: -1})
         .then(posts => res.json(posts))
 });
 
