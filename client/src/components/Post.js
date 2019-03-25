@@ -23,6 +23,8 @@ class Post extends Component {
             <Fragment>
                 <h1>{post.title}</h1>
                 <p>{post.body}</p>
+                <small>Created on: {post.created_at}</small><br/>
+                <small>Last update: {post.updated_at}</small>
             </Fragment>
         )
     }
@@ -32,7 +34,8 @@ Post.propTypes = {
     getPost: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state, ownParams) => ({

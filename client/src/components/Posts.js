@@ -22,7 +22,7 @@ class Posts extends Component {
                 {posts.map(({_id, title}) => (
                     <ListGroupItem key={_id}>
                         <Button
-                            className="remove-btn mr-3"
+                            className="mr-3"
                             color="danger"
                             size="sm"
                             onClick={this.onDeleteClick.bind(this, _id)}
