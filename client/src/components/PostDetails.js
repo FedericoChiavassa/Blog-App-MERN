@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getPost, deletePost, clearPostState } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
-class Post extends Component {
+class PostDetails extends Component {
     
     componentDidMount() {
         this.props.getPost(this.props.id);
@@ -18,6 +18,8 @@ class Post extends Component {
     }
 
     render() {
+        if(this.props.post.loading) return "LOADING";
+
         const { post } = this.props.post;
         return(
             <Fragment>
@@ -30,7 +32,7 @@ class Post extends Component {
     }
 }
 
-Post.propTypes = {
+PostDetails.propTypes = {
     getPost: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
@@ -43,4 +45,4 @@ const mapStateToProps = (state, ownParams) => ({
     id: ownParams.id
 });
 
-export default connect(mapStateToProps, { getPost, deletePost, clearPostState })(Post);
+export default connect(mapStateToProps, { getPost, deletePost, clearPostState })(PostDetails);

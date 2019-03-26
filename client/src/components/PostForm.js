@@ -1,23 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { addPost } from '../actions/postActions';
+import { setPostsLoading, getPost, addPost, updatePost, clearPostState } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
-class AddPost extends Component {
-
+class PostForm extends Component {
+    
     state = {
-        title: '',
-        body: ''
+        title: "",
+        body: "",
+        newPost: true
     }
 
-    onChange = e => this.setState({ [e.target.name]: e.target.value });
+    componentDidMount() {
+        if(this.props.id) {
+            this.props.getPost(this.props.id);
+            const { post } = this.props.post;
+            this.setState({
+                title: post.title,
+                body: post.body,
+                newPost: false
+            })
+        }
+
+    }
+
+    componentWillUnmount() {
+        this.props.clearPostState();
+    }
+
+    onChange = e => this.setState({[e.target.name]: e.target.value})
     
     submitPost = e => {
         e.preventDefault();
         const { title, body } = this.state;
         const post = { title, body };
-        this.props.addPost(post);
+        this.state.newPost ? this.props.addPost(post) : this.props.updatePost(this.props.id, post);
         this.setState({
             title: '',
             body: ''
@@ -26,7 +44,10 @@ class AddPost extends Component {
     }
 
     render() {
-        const { title, body } = this.state
+        if(this.props.post.loading) return "LOADING";
+        
+        const { title, body } = this.props.post.post;
+
         return(
             <Form onSubmit={this.submitPost}>
                 <FormGroup>
@@ -35,7 +56,7 @@ class AddPost extends Component {
                         type="text"
                         name="title"
                         onChange={this.onChange}
-                        value={title}
+                        defaultValue={title}
                         placeholder="Title..." />
                 </FormGroup>
                 <FormGroup>
@@ -45,7 +66,7 @@ class AddPost extends Component {
                         name="body"
                         id="body"
                         onChange={this.onChange}
-                        value={body}
+                        defaultValue={body}
                         placeholder="Body..." 
                         rows="10"/>
                 </FormGroup>
@@ -57,13 +78,20 @@ class AddPost extends Component {
     }
 }
 
-AddPost.propTypes = {
+PostForm.propTypes = {
+    getPost: PropTypes.func.isRequired,
     addPost: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired
+    updatePost: PropTypes.func.isRequired,
+    clearPostState: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    id: PropTypes.string
 }
 
 const mapStateToProps = (state, ownParams) => ({
-    history: ownParams.history
+    post: state.post,
+    history: ownParams.history,
+    id: ownParams.id
 });
 
-export default connect(mapStateToProps, { addPost })(AddPost);
+export default connect(mapStateToProps, { setPostsLoading, getPost, addPost, updatePost, clearPostState })(PostForm);

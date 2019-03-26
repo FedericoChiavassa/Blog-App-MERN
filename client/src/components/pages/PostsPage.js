@@ -2,13 +2,13 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import Posts from '../Posts';
+import PostsList from '../PostsList';
 
-export default function PostsPage() {
+function PostsPage() {
   return (         
         <Container>
             <h1>Posts</h1>
-            <Posts />
+            <PostsList />
             <Button
                 tag={Link}
                 to="/posts/create-post"
@@ -18,3 +18,5 @@ export default function PostsPage() {
         </Container>
   );
 }
+
+export default PostsPage;

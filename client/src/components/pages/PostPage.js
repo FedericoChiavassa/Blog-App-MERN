@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import Post from '../Post';
+import PostDetails from '../PostDetails';
 
  export default function PostPage({ match }) {
   return (     
         <Container>
-            <Post id={match.params.id}/>
+            <PostDetails id={match.params.id}/>
         </Container>
   );
 }

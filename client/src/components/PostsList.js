@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getPosts, deletePost } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
-class Posts extends Component {
+class PostsList extends Component {
 
     componentDidMount() {
         this.props.getPosts();
@@ -28,6 +28,13 @@ class Posts extends Component {
                             onClick={this.onDeleteClick.bind(this, _id)}
                         >&times;</Button>
                         <Link to={`/posts/${_id}`}>{title}</Link>
+                        <Button
+                            tag={Link}
+                            to={`/posts/${_id}/edit`}
+                            className="float-right"
+                            size="sm"
+                            color="primary"
+                        >Edit Post</Button>
                     </ListGroupItem>
                 ))}
             </ListGroup>
@@ -35,7 +42,7 @@ class Posts extends Component {
     }
 }
 
-Posts.propTypes = {
+PostsList.propTypes = {
     getPosts: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired
@@ -45,4 +52,4 @@ const mapStateToProps = (state) => ({
     post: state.post
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost })(Posts);
+export default connect(mapStateToProps, { getPosts, deletePost })(PostsList);
