@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../../middleware/auth');
 
 // Post Model
 const Post = require('../../models/Post');
@@ -15,8 +16,8 @@ router.get('/', (req, res) => {
 
 // @route   POST api/posts
 // @desc    Create a Post
-// @access  Public
-router.post('/', (req, res) => {
+// @access  Private
+router.post('/', auth, (req, res) => {
     const newPost = new Post({
         title: req.body.title,
         body: req.body.body
@@ -35,8 +36,8 @@ router.get('/:id', (req, res) => {
 
 // @route   PUT api/posts/:id
 // @desc    Update a Post
-// @access  Public
-router.put('/:id', (req, res) => {
+// @access  Private
+router.put('/:id', auth, (req, res) => {
     Post.findOneAndUpdate(
         {_id: req.params.id}, 
         req.body,
@@ -47,8 +48,8 @@ router.put('/:id', (req, res) => {
 
 // @route   DELETE api/posts/:id
 // @desc    Delete a Post
-// @access  Public
-router.delete('/:id', (req, res) => {
+// @access  Private
+router.delete('/:id', auth, (req, res) => {
     Post.findById(req.params.id)
         .then(post => post.remove().then(() => res.json({success: true})))
         .catch(err => res.status(404).json({success: false,}));

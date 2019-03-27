@@ -17,6 +17,8 @@ mongoose.connect(db, {useNewUrlParser: true, useCreateIndex: true, useFindAndMod
 
 // Use Routes
 app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 const port = process.env.PORT || 5000;
 
