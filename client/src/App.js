@@ -8,14 +8,18 @@ import PostPage from './components/pages/PostPage';
 import EditPostPage from './components/pages/EditPostPage';
 import AboutPage from './components/pages/AboutPage';
 
-
 import { Provider } from 'react-redux';
 import store from './store';
+import { loadUser } from './actions/authActions';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+        store.dispatch(loadUser());
+  }
+
   render() {
     return (
         <Provider store= {store}>

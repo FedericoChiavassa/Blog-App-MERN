@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { setPostsLoading, getPost, addPost, updatePost, clearPostState } from '../actions/postActions';
+import { getPost, addPost, updatePost, clearPostState } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
 class PostForm extends Component {
@@ -94,4 +94,4 @@ const mapStateToProps = (state, ownParams) => ({
     id: ownParams.id
 });
 
-export default connect(mapStateToProps, { setPostsLoading, getPost, addPost, updatePost, clearPostState })(PostForm);
+export default connect(mapStateToProps, { getPost, addPost, updatePost, clearPostState })(PostForm);
