@@ -22,7 +22,6 @@ class PostForm extends Component {
                 newPost: false
             })
         }
-
     }
 
     componentWillUnmount() {

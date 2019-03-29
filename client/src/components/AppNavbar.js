@@ -49,7 +49,7 @@ class AppNavbar extends Component {
                     <RegisterModal />
                 </NavItem>
                 <NavItem>
-                    <LoginModal />
+                        <LoginModal/>
                 </NavItem>  
             </Fragment>
         );
@@ -57,7 +57,7 @@ class AppNavbar extends Component {
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">
                     <Container>
-                        <NavbarBrand tag={Link} to="/">BloggApp</NavbarBrand>
+                        <NavbarBrand tag={Link} to="/">BlogApp</NavbarBrand>
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen}  navbar>
                             <Nav className="mr-auto" navbar>
