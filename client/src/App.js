@@ -7,6 +7,7 @@ import HomePage from './components/pages/HomePage';
 import PostsPage from './components/pages/PostsPage';
 import PostPage from './components/pages/PostPage';
 import EditPostPage from './components/pages/EditPostPage';
+import NewPostPage from './components/pages/NewPostPage';
 import AboutPage from './components/pages/AboutPage';
 import PageNotFound from './components/pages/PageNotFound';
 import LoginPage from './components/pages/LoginPage';
@@ -35,7 +36,7 @@ class App extends Component {
                         <Route exact path='/login' component={LoginPage} />
                         <Route exact path='/register' component={RegisterPage} />
                         <Route exact path='/posts' component={PostsPage} />
-                        <PrivateRoute exact path='/posts/create-post'  component={EditPostPage} />
+                        <PrivateRoute exact path='/posts/create-post'  component={NewPostPage} />
                         <PrivateRoute exact path='/posts/:id/edit'  component={EditPostPage} />
                         <Route exact path='/posts/:id'  component={PostPage} />
                         <Route path='/about' component={AboutPage} />

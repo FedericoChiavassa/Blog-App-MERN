@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button, Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getPosts, deletePost } from '../actions/postActions';
 import PropTypes from 'prop-types';
@@ -16,6 +16,7 @@ class PostsList extends Component {
     }
 
     render() {
+        if(this.props.post.loading) return <Spinner style={{display: 'block'}} color="primary" />;
         const { posts } = this.props.post;
         return(
             <ListGroup>

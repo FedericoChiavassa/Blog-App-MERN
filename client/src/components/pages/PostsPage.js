@@ -12,7 +12,7 @@ function PostsPage() {
             <Button
                 tag={Link}
                 to="/posts/create-post"
-                className="mt-3"
+                className="mt-4"
                 color="primary"
             >New Post</Button>
         </Container>

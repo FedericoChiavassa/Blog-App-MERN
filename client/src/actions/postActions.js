@@ -14,6 +14,7 @@ export const getPosts = () => dispatch => {
 };
 
 export const deletePost = (id) => (dispatch, getState) => {
+    dispatch(clearPostState());
     axios.delete(`/api/posts/${id}`, tokenConfig(getState))
     .then(res => dispatch({
         type: DELETE_POST,
@@ -26,6 +27,7 @@ export const deletePost = (id) => (dispatch, getState) => {
 };
 
 export const addPost = (post) => (dispatch, getState) => {
+    dispatch(clearPostState());
     axios.post('/api/posts', post, tokenConfig(getState))
         .then(res => dispatch({
             type: ADD_POST,
@@ -46,6 +48,7 @@ export const getPost = (id) => (dispatch) => {
 };
 
 export const updatePost = (id, post) => (dispatch, getState) => {
+    dispatch(clearPostState());
     axios.put(`/api/posts/${id}`, post, tokenConfig(getState))
         .then(res => dispatch({
             type: UPDATE_POST,

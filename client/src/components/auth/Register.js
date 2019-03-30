@@ -5,7 +5,8 @@ import {
     FormGroup,
     Label,
     Input,
-    Alert
+    Alert,
+    Spinner
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -55,7 +56,7 @@ class Register extends Component {
     }
 
     render() {
-        if(this.props.auth.isLoading) return "LOADING";
+        if(this.props.auth.isLoading) return <Spinner color="primary" />;
         return(
             <div>
                 { this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>) : null}

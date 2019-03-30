@@ -2,12 +2,12 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import PostForm from '../PostForm';
 
-function EditPostPage({match, history}) {
+function NewPostPage({history}) {
   return (     
         <Container>
-            <PostForm id={match.params.id} history={history} />
+            <PostForm newPost={true} history={history} />
         </Container>
   );
 }
 
-export default EditPostPage;
+export default NewPostPage;

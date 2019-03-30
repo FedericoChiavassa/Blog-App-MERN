@@ -20,17 +20,19 @@ router.get('/', (req, res) => {
 router.post('/', auth, (req, res) => {
     const newPost = new Post({
         title: req.body.title,
-        body: req.body.body
+        body: req.body.body,
+        author: req.user.id
     });
 
     newPost.save().then(post => res.json(post));
 });
 
 // @route   GET api/posts/:id
-// @desc    Get a Post
+// @desc    Get Post Details
 // @access  Public
 router.get('/:id', (req, res) => {
     Post.findById(req.params.id)
+        .populate('author', '-password')
         .then(post => res.json(post));
 });
 

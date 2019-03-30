@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Spinner, Button } from 'reactstrap';
 import { getPost, deletePost, clearPostState } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
@@ -18,17 +20,41 @@ class PostDetails extends Component {
     }
 
     render() {
-        if(this.props.post.loading) return "LOADING";
-
-        const { post } = this.props.post;
-        return(
-            <Fragment>
-                <h1>{post.title}</h1>
-                <p>{post.body}</p>
-                <small>Created on: {post.created_at}</small><br/>
-                <small>Last update: {post.updated_at}</small>
-            </Fragment>
-        )
+        if(this.props.post.post.author && !this.props.post.loading){
+            const { isAuthenticated, user } = this.props.auth;
+            const { post } = this.props.post;
+            const { author } = this.props.post.post;
+            const buttons = (
+                <Fragment>
+                    <Button
+                    className="mr-3 mt-3"
+                    color="danger"
+                    size="sm"
+                    onClick={this.onDeleteClick.bind(this, post._id)}
+                    >Delete Post</Button>
+                    <Button
+                        tag={Link}
+                        to={`/posts/${post._id}/edit`}
+                        className="mt-3"
+                        size="sm"
+                        color="primary"
+                    >Edit Post</Button>
+                </Fragment>
+            )
+            
+            return(
+                <Fragment>
+                    <h1>{post.title}</h1>
+                    <p>{post.body}</p>
+                    <small>Author: {author.name}</small><br/>
+                    <small>Created on: {post.created_at}</small><br/>
+                    <small>Last update: {post.updated_at}</small><br/>
+                    { (isAuthenticated && author._id === user._id)  ? buttons : null }
+                </Fragment>
+            )
+        } else {
+            return <Spinner color="primary" />;
+        }
     }
 }
 
@@ -42,6 +68,7 @@ PostDetails.propTypes = {
 
 const mapStateToProps = (state, ownParams) => ({
     post: state.post,
+    auth: state.auth,
     id: ownParams.id
 });
 

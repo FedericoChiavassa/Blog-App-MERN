@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Spinner  } from 'reactstrap';
 import { getPost, addPost, updatePost, clearPostState } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
@@ -8,19 +8,21 @@ class PostForm extends Component {
     
     state = {
         title: "",
-        body: "",
-        newPost: true
+        body: ""
     }
 
     componentDidMount() {
-        if(this.props.id) {
+        if(!this.props.newPost) {
+            console.log('oldpost');
             this.props.getPost(this.props.id);
             const { post } = this.props.post;
             this.setState({
                 title: post.title,
-                body: post.body,
-                newPost: false
-            })
+                body: post.body
+            });
+        } else {
+            this.props.clearPostState();
+            this.forceUpdate();
         }
     }
 
@@ -34,7 +36,7 @@ class PostForm extends Component {
         e.preventDefault();
         const { title, body } = this.state;
         const post = { title, body };
-        this.state.newPost ? this.props.addPost(post) : this.props.updatePost(this.props.id, post);
+        this.props.newPost ? this.props.addPost(post) : this.props.updatePost(this.props.id, post);
         this.setState({
             title: '',
             body: ''
@@ -43,7 +45,7 @@ class PostForm extends Component {
     }
 
     render() {
-        if(this.props.post.loading) return "LOADING";
+        if(this.props.post.loading) return <Spinner color="primary" />;
         
         const { title, body } = this.props.post.post;
 
@@ -84,13 +86,15 @@ PostForm.propTypes = {
     clearPostState: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    id: PropTypes.string
+    id: PropTypes.string,
+    newPost: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state, ownParams) => ({
     post: state.post,
     history: ownParams.history,
-    id: ownParams.id
+    id: ownParams.id,
+    newPost: ownParams.newPost
 });
 
 export default connect(mapStateToProps, { getPost, addPost, updatePost, clearPostState })(PostForm);
