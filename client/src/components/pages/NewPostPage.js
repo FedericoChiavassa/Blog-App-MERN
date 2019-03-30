@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import PostForm from '../PostForm';
+import NewPostForm from '../NewPostForm';
 
 function NewPostPage({history}) {
   return (     
         <Container>
-            <PostForm newPost={true} history={history} />
+            <NewPostForm history={history} />
         </Container>
   );
 }

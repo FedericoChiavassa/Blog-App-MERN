@@ -1,29 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, FormGroup, Label, Input, Spinner  } from 'reactstrap';
-import { getPost, addPost, updatePost, clearPostState } from '../actions/postActions';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { addPost, clearPostState } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
-class PostForm extends Component {
+class NewPostForm extends Component {
     
     state = {
         title: "",
         body: ""
-    }
-
-    componentDidMount() {
-        if(!this.props.newPost) {
-            console.log('oldpost');
-            this.props.getPost(this.props.id);
-            const { post } = this.props.post;
-            this.setState({
-                title: post.title,
-                body: post.body
-            });
-        } else {
-            this.props.clearPostState();
-            this.forceUpdate();
-        }
     }
 
     componentWillUnmount() {
@@ -36,7 +21,7 @@ class PostForm extends Component {
         e.preventDefault();
         const { title, body } = this.state;
         const post = { title, body };
-        this.props.newPost ? this.props.addPost(post) : this.props.updatePost(this.props.id, post);
+        this.props.addPost(post);
         this.setState({
             title: '',
             body: ''
@@ -45,10 +30,6 @@ class PostForm extends Component {
     }
 
     render() {
-        if(this.props.post.loading) return <Spinner color="primary" />;
-        
-        const { title, body } = this.props.post.post;
-
         return(
             <Form onSubmit={this.submitPost}>
                 <FormGroup>
@@ -57,7 +38,7 @@ class PostForm extends Component {
                         type="text"
                         name="title"
                         onChange={this.onChange}
-                        defaultValue={title}
+                        value={this.state.title}
                         placeholder="Title..." />
                 </FormGroup>
                 <FormGroup>
@@ -67,7 +48,7 @@ class PostForm extends Component {
                         name="body"
                         id="body"
                         onChange={this.onChange}
-                        defaultValue={body}
+                        value={this.state.body}
                         placeholder="Body..." 
                         rows="10"/>
                 </FormGroup>
@@ -79,22 +60,14 @@ class PostForm extends Component {
     }
 }
 
-PostForm.propTypes = {
-    getPost: PropTypes.func.isRequired,
+NewPostForm.propTypes = {
     addPost: PropTypes.func.isRequired,
-    updatePost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    id: PropTypes.string,
-    newPost: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state, ownParams) => ({
-    post: state.post,
     history: ownParams.history,
-    id: ownParams.id,
-    newPost: ownParams.newPost
 });
 
-export default connect(mapStateToProps, { getPost, addPost, updatePost, clearPostState })(PostForm);
+export default connect(mapStateToProps, { addPost, clearPostState })(NewPostForm);

@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import PostsPage from './components/pages/PostsPage';
 import PostPage from './components/pages/PostPage';
-import EditPostPage from './components/pages/EditPostPage';
+import UpdatePostPage from './components/pages/UpdatePostPage';
 import NewPostPage from './components/pages/NewPostPage';
 import AboutPage from './components/pages/AboutPage';
 import PageNotFound from './components/pages/PageNotFound';
@@ -36,8 +36,8 @@ class App extends Component {
                         <Route exact path='/login' component={LoginPage} />
                         <Route exact path='/register' component={RegisterPage} />
                         <Route exact path='/posts' component={PostsPage} />
-                        <PrivateRoute exact path='/posts/create-post'  component={NewPostPage} />
-                        <PrivateRoute exact path='/posts/:id/edit'  component={EditPostPage} />
+                        <PrivateRoute exact path='/posts/create-post' component={NewPostPage} />
+                        <PrivateRoute exact path='/posts/:id/edit' component={UpdatePostPage} />
                         <Route exact path='/posts/:id'  component={PostPage} />
                         <Route path='/about' component={AboutPage} />
                         <Route path='*' component={PageNotFound} />
