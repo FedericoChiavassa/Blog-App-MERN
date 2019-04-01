@@ -10,6 +10,10 @@ import {
     Nav,
     NavItem,
     NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
     Container
 } from 'reactstrap';
 import RegisterModal from './auth/RegisterModal';
@@ -32,14 +36,22 @@ class AppNavbar extends Component {
 
         const authLinks = (
             <Fragment>
-                <NavItem>
-                    <span className="navbar-text mr-3">
+                <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                    <span className="navbar-text">
                         <strong>{ user ? `Welcome ${user.name}` : '' }</strong>
                     </span>
-                </NavItem>
-               <NavItem>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem tag={Link} to="/dashboard">
+                    Dashboard
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
                     <Logout />
-                </NavItem> 
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </Fragment>
         );
 

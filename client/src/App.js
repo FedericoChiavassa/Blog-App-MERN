@@ -12,6 +12,7 @@ import AboutPage from './components/pages/AboutPage';
 import PageNotFound from './components/pages/PageNotFound';
 import LoginPage from './components/pages/LoginPage';
 import RegisterPage from './components/pages/RegisterPage';
+import DashboardPage from './components/pages/DashboardPage';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -39,6 +40,7 @@ class App extends Component {
                         <PrivateRoute exact path='/posts/create-post' component={NewPostPage} />
                         <PrivateRoute exact path='/posts/:id/edit' component={UpdatePostPage} />
                         <Route exact path='/posts/:id'  component={PostPage} />
+                        <PrivateRoute exact path='/dashboard' component={DashboardPage} />
                         <Route path='/about' component={AboutPage} />
                         <Route path='*' component={PageNotFound} />
                     </Switch>
