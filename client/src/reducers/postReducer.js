@@ -28,7 +28,7 @@ export default function(state = initialState, action) {
         case UPDATE_POST:
             return {
                 ...state,
-                post: action.payload
+                posts: state.posts.map( post => post._id === action.payload._id ? action.payload : post)
             };
         case DELETE_POST:
             return {

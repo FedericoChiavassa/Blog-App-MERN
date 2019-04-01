@@ -39,13 +39,48 @@ router.get('/:id', (req, res) => {
 // @route   PUT api/posts/:id
 // @desc    Update a Post
 // @access  Private
+// router.put('/:id', auth, (req, res) => {
+//     Post.findOneAndUpdate(
+//         {_id: req.params.id}, 
+//         req.body,
+//         {new: true}
+//     )
+//     .then(post => res.json(post))
+// });
+
+// @route   PUT api/posts/:id
+// @desc    Update a Post
+// @access  Private
+// router.put('/:id', auth, (req, res) => {
+//     Post.findById(req.params.id)
+//         .then(post => {
+//             if(req.user.id == post.author) {
+//                 post.updateOne({ $set: { title: req.body.title, body: req.body.body }}).then(post => res.json(post));
+//             } else {
+//                 res.status(401);
+//             }
+//         })
+//         .catch(err => res.status(404));
+// });
+
+// @route   PUT api/posts/:id
+// @desc    Update a Post
+// @access  Private
 router.put('/:id', auth, (req, res) => {
-    Post.findOneAndUpdate(
-        {_id: req.params.id}, 
-        req.body,
-        {new: true}
-    )
-    .then(post => res.json(post))
+    Post.findById(req.params.id)
+        .then(post => {
+            if(req.user.id == post.author) {
+                Post.findOneAndUpdate(
+                    {_id: req.params.id}, 
+                    req.body,
+                    {new: true}
+                )
+                .then(post => res.json(post))
+            } else {
+                res.status(401).json({msg: 'invalid user' });
+            }
+        })
+        .catch(err => res.status(404));
 });
 
 // @route   DELETE api/posts/:id
@@ -53,8 +88,15 @@ router.put('/:id', auth, (req, res) => {
 // @access  Private
 router.delete('/:id', auth, (req, res) => {
     Post.findById(req.params.id)
-        .then(post => post.remove().then(() => res.json({success: true})))
-        .catch(err => res.status(404).json({success: false,}));
+        .then(post => {
+            if(req.user.id == post.author) {
+               post.remove().then(() => res.json({success: true})) 
+            }
+            else {
+                res.status(401).json({success: false});
+            }
+        })
+        .catch(err => res.status(404).json({success: false}));
 });
 
 
