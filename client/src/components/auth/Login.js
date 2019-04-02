@@ -9,6 +9,7 @@ import {
     Spinner
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { login } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
@@ -21,8 +22,7 @@ class Login extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error, isAuthenticated } = this.props;
-        if(isAuthenticated) this.props.history.push('/');
+        const { error} = this.props;
         if(error !== prevProps.error) {
             // Check for register error
             if(error.id === 'LOGIN_FAIL') {
@@ -54,6 +54,13 @@ class Login extends Component {
 
     render() {
         if(this.props.auth.isLoading) return <Spinner color="primary" />;
+
+        const { isAuthenticated} = this.props;
+        if(isAuthenticated) {
+            const { from } = this.props.location.state || { from: { pathname: '/' } };
+            return <Redirect to={from} />
+        }
+
         return(
             <div>
                 { this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>) : null}
@@ -80,7 +87,7 @@ class Login extends Component {
                         />
                         <Button
                             color="dark"
-                            style={{marginTop: '2rem'}}
+                            className="mt-3"
                         >Login</Button>
                     </FormGroup>
                 </Form>
@@ -95,6 +102,7 @@ Login.propTypes = {
     login: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state, ownParams) => ({
@@ -102,6 +110,7 @@ const mapStateToProps = (state, ownParams) => ({
     error: state.error,
     auth:state.auth,
     history: ownParams.history,
+    location: ownParams.location
 });
 
 export default connect(mapStateToProps, { login, clearErrors })(Login);

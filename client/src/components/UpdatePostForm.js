@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, FormGroup, Label, Input, Spinner  } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Spinner, Alert  } from 'reactstrap';
 import { getPost, updatePost, clearPostState } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
@@ -39,9 +39,14 @@ class UpdatePostForm extends Component {
     }
 
     render() {
-        if(this.props.post.loading) return <Spinner color="primary" />;
+        if(this.props.post.loading || this.props.auth.isLoading) return <Spinner color="primary" />;
         
-        const { title, body } = this.props.post.post;
+        const { title, body, author } = this.props.post.post;
+        const { user } = this.props.auth;
+
+        if (author && user) {
+            if(author._id !== user._id) return <Alert color="danger">Only the author can update this post. </Alert>;
+        }
 
         return(
             <Form onSubmit={this.submitPost}>
@@ -77,12 +82,14 @@ UpdatePostForm.propTypes = {
     getPost: PropTypes.func.isRequired,
     updatePost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     id: PropTypes.string,
 }
 
 const mapStateToProps = (state, ownParams) => ({
+    auth: state.auth,
     post: state.post,
     history: ownParams.history,
     id: ownParams.id,

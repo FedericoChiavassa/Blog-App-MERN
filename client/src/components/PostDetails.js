@@ -16,7 +16,8 @@ class PostDetails extends Component {
     }
 
     onDeleteClick = (id) => {
-        this.props.deletePost(id)
+        this.props.deletePost(id);
+        this.props.history.push('/posts');
     }
 
     render() {
@@ -63,13 +64,15 @@ PostDetails.propTypes = {
     deletePost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    history: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownParams) => ({
     post: state.post,
     auth: state.auth,
-    id: ownParams.id
+    id: ownParams.id,
+    history: ownParams.history
 });
 
 export default connect(mapStateToProps, { getPost, deletePost, clearPostState })(PostDetails);
