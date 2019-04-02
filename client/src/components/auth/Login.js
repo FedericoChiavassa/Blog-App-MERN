@@ -102,7 +102,7 @@ Login.propTypes = {
     login: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownParams) => ({

@@ -28,6 +28,7 @@ class UpdatePostForm extends Component {
     
     submitPost = e => {
         e.preventDefault();
+        const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
         const { title, body } = this.state;
         const post = { title, body };
         this.props.updatePost(this.props.id, post);
@@ -35,7 +36,7 @@ class UpdatePostForm extends Component {
             title: '',
             body: ''
           });
-        this.props.history.push('/posts');
+        this.props.history.push(from);
     }
 
     render() {
@@ -86,6 +87,7 @@ UpdatePostForm.propTypes = {
     post: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     id: PropTypes.string,
+    location: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownParams) => ({
@@ -93,6 +95,7 @@ const mapStateToProps = (state, ownParams) => ({
     post: state.post,
     history: ownParams.history,
     id: ownParams.id,
+    location: ownParams.location
 });
 
 export default connect(mapStateToProps, { getPost, updatePost, clearPostState })(UpdatePostForm);

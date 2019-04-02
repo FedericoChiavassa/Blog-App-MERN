@@ -2,10 +2,10 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import PostDetails from '../PostDetails';
 
- export default function PostPage({ match, history }) {
+ export default function PostPage({ match, history, location }) {
   return (     
         <Container>
-            <PostDetails id={match.params.id} history={history}/>
+            <PostDetails id={match.params.id} history={history} location={location} />
         </Container>
   );
 }

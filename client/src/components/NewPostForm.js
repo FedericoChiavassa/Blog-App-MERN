@@ -19,6 +19,7 @@ class NewPostForm extends Component {
     
     submitPost = e => {
         e.preventDefault();
+        const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
         const { title, body } = this.state;
         const post = { title, body };
         this.props.addPost(post);
@@ -26,7 +27,7 @@ class NewPostForm extends Component {
             title: '',
             body: ''
           });
-        this.props.history.push('/posts');
+        this.props.history.push(from);
     }
 
     render() {
@@ -64,10 +65,12 @@ NewPostForm.propTypes = {
     addPost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownParams) => ({
     history: ownParams.history,
+    location: ownParams.location
 });
 
 export default connect(mapStateToProps, { addPost, clearPostState })(NewPostForm);

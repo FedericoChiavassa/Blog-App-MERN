@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink as RRNavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import {
@@ -16,8 +16,6 @@ import {
     DropdownItem,
     Container
 } from 'reactstrap';
-import RegisterModal from './auth/RegisterModal';
-import LoginModal from './auth/LoginModal';
 import Logout from './auth/Logout';
 
 class AppNavbar extends Component {
@@ -43,7 +41,7 @@ class AppNavbar extends Component {
                     </span>
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem tag={Link} to="/dashboard">
+                  <DropdownItem tag={RRNavLink} to="/dashboard">
                     Dashboard
                   </DropdownItem>
                   <DropdownItem divider />
@@ -58,10 +56,10 @@ class AppNavbar extends Component {
         const guestLinks = (
             <Fragment>
                 <NavItem>
-                    <RegisterModal />
+                    <NavLink tag={RRNavLink} to="/register">Register</NavLink>
                 </NavItem>
                 <NavItem>
-                        <LoginModal/>
+                    <NavLink tag={RRNavLink} to="/login">Login</NavLink>
                 </NavItem>  
             </Fragment>
         );
@@ -69,15 +67,15 @@ class AppNavbar extends Component {
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">
                     <Container>
-                        <NavbarBrand tag={Link} to="/">BlogApp</NavbarBrand>
+                        <NavbarBrand tag={RRNavLink} to="/">BlogApp</NavbarBrand>
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen}  navbar>
                             <Nav className="mr-auto" navbar>
                                 <NavItem>
-                                    <NavLink tag={Link} to="/posts">Posts</NavLink>
+                                    <NavLink tag={RRNavLink} to="/posts">Posts</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} to="/about">About</NavLink>
+                                    <NavLink tag={RRNavLink} to="/about">About</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>

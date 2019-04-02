@@ -8,17 +8,19 @@ function PostsPage({ auth }) {
   const button = (
     <Button
         tag={Link}
-        to="/posts/create-post"
+        to={{
+            pathname: '/posts/create-post',
+            state: { from: '/posts' }
+        }}
         className="mt-4 mb-4"
         color="primary"
-        outline
         block
     >New Post</Button>
   );
 
   return (   
     <Container>
-        <h1>Posts</h1>
+        <h1 className="mb-4">Posts</h1>
         {auth.isAuthenticated ? button : null}
         <PostsList />
     </Container>

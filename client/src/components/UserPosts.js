@@ -22,7 +22,10 @@ class UserPosts extends Component {
             <ListGroup>
                 {posts.map(({_id, title}) => ( 
                     <ListGroupItem key={_id}>
-                        <Link to={`/posts/${_id}`}>{title}</Link>
+                        <Link to={{
+                            pathname: `/posts/${_id}`,
+                            state: { from: '/dashboard' }
+                        }}>{title}</Link>
                         <Button
                             className="float-right"
                             color="danger"
@@ -31,7 +34,10 @@ class UserPosts extends Component {
                         >Delete</Button>                   
                         <Button
                             tag={Link}
-                            to={`/posts/${_id}/edit`}
+                            to={{
+                                pathname: `/posts/${_id}/edit`,
+                                state: { from: '/dashboard' }
+                            }}
                             className="float-right mr-3"
                             size="sm"
                             color="primary"

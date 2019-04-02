@@ -10,13 +10,15 @@ function DashboardPage() {
         <h1>Dashboard</h1>
         <Button
             tag={Link}
-            to="/posts/create-post"
+            to={{
+                pathname: '/posts/create-post',
+                state: { from: '/dashboard' }
+            }}
             className="mt-4 mb-4"
             color="primary"
-            outline
             block
             >New Post</Button>
-            <h3>Your Posts</h3>
+            <h3 className="mb-3">Manage your posts:</h3>
         <UserPosts />
     </Container>
   );

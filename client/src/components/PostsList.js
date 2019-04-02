@@ -22,7 +22,10 @@ class PostsList extends Component {
             <ListGroup>
                 {posts.map(({_id, title}) => (
                     <ListGroupItem key={_id}>
-                        <Link to={`/posts/${_id}`}>{title}</Link>
+                        <Link to={{
+                            pathname: `/posts/${_id}`,
+                            state: { from: '/posts' }
+                        }}>{title}</Link>
                     </ListGroupItem>
                 ))}
             </ListGroup>

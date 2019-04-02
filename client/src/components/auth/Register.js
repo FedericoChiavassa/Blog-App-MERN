@@ -9,6 +9,7 @@ import {
     Spinner
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { register } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
@@ -22,8 +23,7 @@ class Register extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error, isAuthenticated } = this.props;
-        if(isAuthenticated) this.props.history.push('/');
+        const { error } = this.props;
         if(error !== prevProps.error) {
             // Check for register error
             if(error.id === 'REGISTER_FAIL') {
@@ -57,6 +57,8 @@ class Register extends Component {
 
     render() {
         if(this.props.auth.isLoading) return <Spinner color="primary" />;
+        if(this.props.isAuthenticated) return <Redirect to="/dashboard" />
+
         return(
             <div>
                 { this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>) : null}
@@ -93,7 +95,7 @@ class Register extends Component {
                         />
                         <Button
                             color="dark"
-                            style={{marginTop: '2rem'}}
+                            className="mt-3"
                         >Register</Button>
                     </FormGroup>
                 </Form>
