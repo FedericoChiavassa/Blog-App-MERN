@@ -1,22 +1,32 @@
 import React from 'react';
-import { Container } from 'reactstrap';
+import { connect } from 'react-redux';
+import { Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap';
 import PostsList from '../PostsList';
 
-function PostsPage() {
-  return (         
-        <Container>
-            <h1>Posts</h1>
-            <PostsList />
-            <Button
-                tag={Link}
-                to="/posts/create-post"
-                className="mt-4"
-                color="primary"
-            >New Post</Button>
-        </Container>
+function PostsPage({ auth }) {
+  const button = (
+    <Button
+        tag={Link}
+        to="/posts/create-post"
+        className="mt-4 mb-4"
+        color="primary"
+        outline
+        block
+    >New Post</Button>
+  );
+
+  return (   
+    <Container>
+        <h1>Posts</h1>
+        {auth.isAuthenticated ? button : null}
+        <PostsList />
+    </Container>
   );
 }
 
-export default PostsPage;
+const mapStateToProps = (state) => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps)(PostsPage);

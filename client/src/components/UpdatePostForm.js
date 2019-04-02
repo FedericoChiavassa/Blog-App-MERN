@@ -71,7 +71,7 @@ class UpdatePostForm extends Component {
                         rows="10"/>
                 </FormGroup>
                 <FormGroup>
-                    <Button type="submit" >Submit</Button>
+                    <Button type="submit" >Save Changes</Button>
                 </FormGroup>
             </Form>
         )

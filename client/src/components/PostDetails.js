@@ -28,18 +28,18 @@ class PostDetails extends Component {
             const buttons = (
                 <Fragment>
                     <Button
-                    className="mr-3 mt-3"
-                    color="danger"
-                    size="sm"
-                    onClick={this.onDeleteClick.bind(this, post._id)}
-                    >Delete Post</Button>
-                    <Button
                         tag={Link}
                         to={`/posts/${post._id}/edit`}
-                        className="mt-3"
+                        className="mr-3 mt-3"
                         size="sm"
                         color="primary"
                     >Edit Post</Button>
+                    <Button
+                        className="mt-3"
+                        color="danger"
+                        size="sm"
+                        onClick={this.onDeleteClick.bind(this, post._id)}
+                    >Delete Post</Button>
                 </Fragment>
             )
             

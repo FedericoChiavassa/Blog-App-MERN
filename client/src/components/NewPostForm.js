@@ -53,7 +53,7 @@ class NewPostForm extends Component {
                         rows="10"/>
                 </FormGroup>
                 <FormGroup>
-                    <Button type="submit" >Submit</Button>
+                    <Button type="submit" >Create Post</Button>
                 </FormGroup>
             </Form>
         )

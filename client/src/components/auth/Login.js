@@ -57,7 +57,7 @@ class Login extends Component {
 
         const { isAuthenticated} = this.props;
         if(isAuthenticated) {
-            const { from } = this.props.location.state || { from: { pathname: '/' } };
+            const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
             return <Redirect to={from} />
         }
 

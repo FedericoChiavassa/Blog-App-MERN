@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem, Button, Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
-import { getPosts, deletePost } from '../actions/postActions';
+import { getUserPosts, deletePost } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
 class UserPosts extends Component {
 
     componentDidMount() {
-        this.props.getPosts();
+        this.props.getUserPosts(this.props.auth.user._id);
     }
 
     onDeleteClick = (id) => {
@@ -18,39 +18,41 @@ class UserPosts extends Component {
     render() {
         if(this.props.post.loading) return <Spinner style={{display: 'block'}} color="primary" />;
         const { posts } = this.props.post;
-        return(
+        return(   
             <ListGroup>
-                {posts.map(({_id, title}) => (
+                {posts.map(({_id, title}) => ( 
                     <ListGroupItem key={_id}>
+                        <Link to={`/posts/${_id}`}>{title}</Link>
                         <Button
-                            className="mr-3"
+                            className="float-right"
                             color="danger"
                             size="sm"
                             onClick={this.onDeleteClick.bind(this, _id)}
-                        >&times;</Button>
-                        <Link to={`/posts/${_id}`}>{title}</Link>
+                        >Delete</Button>                   
                         <Button
                             tag={Link}
                             to={`/posts/${_id}/edit`}
-                            className="float-right"
+                            className="float-right mr-3"
                             size="sm"
                             color="primary"
                         >Edit Post</Button>
                     </ListGroupItem>
                 ))}
-            </ListGroup>
+            </ListGroup>  
         )
     }
 }
 
 UserPosts.propTypes = {
-    getPosts: PropTypes.func.isRequired,
+    getUserPosts: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    post: state.post
+    post: state.post,
+    auth: state.auth
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost })(UserPosts);
+export default connect(mapStateToProps, { getUserPosts, deletePost })(UserPosts);

@@ -12,6 +12,17 @@ router.get('/', (req, res) => {
     Post.find()
         .sort({created_at: -1})
         .then(posts => res.json(posts))
+        .catch(err => res.status(404));
+});
+
+// @route   GET api/posts/user/:id
+// @desc    Get User Posts
+// @access  Public
+router.get('/user/:id', (req, res) => {
+    Post.find({ author: req.params.id })
+        .sort({created_at: -1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(404));
 });
 
 // @route   POST api/posts
@@ -39,33 +50,6 @@ router.get('/:id', (req, res) => {
 // @route   PUT api/posts/:id
 // @desc    Update a Post
 // @access  Private
-// router.put('/:id', auth, (req, res) => {
-//     Post.findOneAndUpdate(
-//         {_id: req.params.id}, 
-//         req.body,
-//         {new: true}
-//     )
-//     .then(post => res.json(post))
-// });
-
-// @route   PUT api/posts/:id
-// @desc    Update a Post
-// @access  Private
-// router.put('/:id', auth, (req, res) => {
-//     Post.findById(req.params.id)
-//         .then(post => {
-//             if(req.user.id == post.author) {
-//                 post.updateOne({ $set: { title: req.body.title, body: req.body.body }}).then(post => res.json(post));
-//             } else {
-//                 res.status(401);
-//             }
-//         })
-//         .catch(err => res.status(404));
-// });
-
-// @route   PUT api/posts/:id
-// @desc    Update a Post
-// @access  Private
 router.put('/:id', auth, (req, res) => {
     Post.findById(req.params.id)
         .then(post => {
@@ -77,7 +61,7 @@ router.put('/:id', auth, (req, res) => {
                 )
                 .then(post => res.json(post))
             } else {
-                res.status(401).json({msg: 'invalid user' });
+                res.status(401).json({msg: 'Invalid user' });
             }
         })
         .catch(err => res.status(404));

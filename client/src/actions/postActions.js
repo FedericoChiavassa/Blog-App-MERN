@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_POSTS, GET_POST, ADD_POST, UPDATE_POST, DELETE_POST, POSTS_LOADING, CLEAR_POST_STATE } from './types';
+import { GET_POSTS, GET_POST, ADD_POST, UPDATE_POST, DELETE_POST, POSTS_LOADING, CLEAR_POST_STATE, GET_USER_POSTS } from './types';
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
@@ -8,6 +8,16 @@ export const getPosts = () => dispatch => {
     axios.get('/api/posts')
         .then(res => dispatch({
             type: GET_POSTS,
+            payload: res.data
+        }))
+
+};
+
+export const getUserPosts = (id) => dispatch => {
+    dispatch(setPostsLoading());
+    axios.get(`/api/posts/user/${id}`)
+        .then(res => dispatch({
+            type: GET_USER_POSTS,
             payload: res.data
         }))
 
