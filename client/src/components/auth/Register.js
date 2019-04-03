@@ -61,7 +61,7 @@ class Register extends Component {
 
         return(
             <div>
-                { this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>) : null}
+                { this.state.msg ? (<Alert className="mt-3 mb-3" color="danger">{this.state.msg}</Alert>) : null}
                 <Form onSubmit={this.onSubmit}>
                     <FormGroup>
                         <Label for="name">Name</Label>

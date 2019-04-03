@@ -2,6 +2,7 @@ import axios from 'axios';
 import { GET_POSTS, GET_POST, ADD_POST, UPDATE_POST, DELETE_POST, POSTS_LOADING, CLEAR_POST_STATE, GET_USER_POSTS } from './types';
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
+import { createMessage } from './messageActions';
 
 export const getPosts = () => dispatch => {
     dispatch(setPostsLoading());
@@ -39,10 +40,13 @@ export const deletePost = (id) => (dispatch, getState) => {
 export const addPost = (post) => (dispatch, getState) => {
     dispatch(clearPostState());
     axios.post('/api/posts', post, tokenConfig(getState))
-        .then(res => dispatch({
+        .then(res => {
+            dispatch({
             type: ADD_POST,
             payload: res.data
-        }))
+            });
+            dispatch(createMessage('New Post Created'));
+        })
         .catch(err => dispatch(
             returnErrors(err.response.data, err.response.status)
         ));
