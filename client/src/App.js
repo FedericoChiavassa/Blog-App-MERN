@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Container } from 'reactstrap';
 import AppNavbar from './components/AppNavbar';
 import PrivateRoute from './components/auth/PrivateRoute';
 
@@ -21,6 +22,8 @@ import { loadUser } from './actions/authActions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+import Message from './components/Message';
+
 class App extends Component {
   componentDidMount() {
         store.dispatch(loadUser());
@@ -32,6 +35,9 @@ class App extends Component {
             <Router>
                 <div className="App">
                     <AppNavbar />
+                    <Container>
+                        <Message />
+                    </Container>
                     <Switch>
                         <Route exact path='/' component={HomePage} />
                         <Route exact path='/login' component={LoginPage} />

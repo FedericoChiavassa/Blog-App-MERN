@@ -27,10 +27,13 @@ export const getUserPosts = (id) => dispatch => {
 export const deletePost = (id) => (dispatch, getState) => {
     dispatch(clearPostState());
     axios.delete(`/api/posts/${id}`, tokenConfig(getState))
-    .then(res => dispatch({
-        type: DELETE_POST,
-        payload: id
-    }))
+    .then(res => {
+        dispatch({
+            type: DELETE_POST,
+            payload: id
+        });
+        dispatch(createMessage('Post Deleted'));
+    })
     .catch(err => dispatch(
         returnErrors(err.response.data, err.response.status)
     ));
@@ -42,8 +45,8 @@ export const addPost = (post) => (dispatch, getState) => {
     axios.post('/api/posts', post, tokenConfig(getState))
         .then(res => {
             dispatch({
-            type: ADD_POST,
-            payload: res.data
+                type: ADD_POST,
+                payload: res.data
             });
             dispatch(createMessage('New Post Created'));
         })
@@ -64,10 +67,13 @@ export const getPost = (id) => (dispatch) => {
 export const updatePost = (id, post) => (dispatch, getState) => {
     dispatch(clearPostState());
     axios.put(`/api/posts/${id}`, post, tokenConfig(getState))
-        .then(res => dispatch({
-            type: UPDATE_POST,
-            payload: res.data
-        }))
+        .then(res => {
+            dispatch({
+                type: UPDATE_POST,
+                payload: res.data
+            });
+            dispatch(createMessage('Post Updated'));
+        })
         .catch(err => dispatch(
             returnErrors(err.response.data, err.response.status)
         ));

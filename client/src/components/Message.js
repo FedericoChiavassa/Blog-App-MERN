@@ -4,20 +4,14 @@ import { connect } from 'react-redux';
 import { clearMessage } from '../actions/messageActions';
 import PropTypes from 'prop-types';
 
-class PostsList extends Component {
+import { withRouter } from 'react-router-dom'
 
-    state = {
-        msg: ""
-    }
+class Message extends Component {
 
     componentDidUpdate(prevProps) {
-        const { message} = this.props;
-        if(message ) {
-            if(message.msg) {
-                this.setState({msg: message.msg});
-            } else {
-                this.setState({ msg: "" });
-            }
+        const { message } = this.props;
+        if(message === prevProps.message && message.msg !== "")  {
+            this.props.clearMessage();
         }
     }
     
@@ -26,15 +20,16 @@ class PostsList extends Component {
     }
 
     render() {
+        const { msg } = this.props.message;
         return(
             <Fragment>
-                { this.state.msg ? (<Alert className="mt-3 mb-3" color="success">{this.state.msg}</Alert>) : null}
+                { msg !== "" ? (<Alert className="mt-3 mb-4" color="success">{msg}</Alert>) : null}
             </Fragment>
         )
     }
 }
 
-PostsList.propTypes = {
+Message.propTypes = {
     clearMessage: PropTypes.func.isRequired,
     message: PropTypes.object.isRequired
 }
@@ -43,4 +38,4 @@ const mapStateToProps = (state) => ({
     message: state.message
 });
 
-export default connect(mapStateToProps, { clearMessage })(PostsList);
+export default withRouter(connect(mapStateToProps, { clearMessage })(Message));

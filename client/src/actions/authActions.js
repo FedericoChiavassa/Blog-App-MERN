@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { returnErrors } from './errorActions';
+import { createMessage } from './messageActions';
 
 import{
     USER_LOADING,
@@ -43,10 +44,13 @@ export const register = ({ name, email, password }) => dispatch => {
     const body = JSON.stringify({ name, email, password });
 
     axios.post('/api/users', body, config)
-        .then(res => dispatch({
-            type: REGISTER_SUCCESS,
-            payload: res.data
-        }))
+        .then(res => {
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data
+            });
+            dispatch(createMessage('Registration Successfull'));
+        })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
             dispatch({
@@ -68,10 +72,13 @@ export const login = ({ email, password }) => dispatch => {
     const body = JSON.stringify({ email, password });
 
     axios.post('/api/auth', body, config)
-        .then(res => dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.data
-        }))
+        .then(res => {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: res.data
+            });
+            dispatch(createMessage('You are now logged in'));
+        })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
             dispatch({
@@ -81,10 +88,11 @@ export const login = ({ email, password }) => dispatch => {
 }
 
 // Logout User
-export const logout = () => {
-    return {
+export const logout = () => dispatch => {
+    dispatch({
         type: LOGOUT_SUCCESS
-    };
+    });
+    dispatch(createMessage('Logout Successfull'));
 };
 
 // Setup config/headers and token
