@@ -12,15 +12,14 @@ function PostsPage({ auth }) {
             pathname: '/posts/create-post',
             state: { from: '/posts' }
         }}
-        className="mt-4 mb-4"
+        className="float-right"
         color="primary"
-        block
-    >New Post</Button>
+    >+ New Post</Button>
   );
 
   return (   
     <Container>
-        <h1 className="mb-4">Posts</h1>
+        <h1 className="mb-4 d-inline-block">Posts</h1>
         {auth.isAuthenticated ? button : null}
         <PostsList />
     </Container>

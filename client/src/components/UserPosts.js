@@ -18,6 +18,9 @@ class UserPosts extends Component {
     render() {
         if(this.props.post.loading) return <Spinner style={{display: 'block'}} color="primary" />;
         const { posts } = this.props.post;
+
+        if(posts.length < 1) return (<p>You don't have any post yet.</p>);
+
         return(   
             <ListGroup>
                 {posts.map(({_id, title}) => ( 

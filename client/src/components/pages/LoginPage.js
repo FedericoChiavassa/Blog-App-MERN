@@ -8,7 +8,7 @@ function LoginPage({history, location}) {
         <Container>
             <h1>Login</h1>
             <Login history={history} location={location} />
-            <p>If you don't have an account <Link to="/register">register here</Link>.</p>
+            <p>If you don't have an account <Link to="/register">Register Here</Link>.</p>
         </Container>
   );
 }

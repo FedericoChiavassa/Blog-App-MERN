@@ -8,7 +8,7 @@ function RegisterPage({history}) {
         <Container>
             <h1>Register</h1>
             <Register history={history} />
-            <p>If you already have an account <Link to="/login">login here</Link>.</p>
+            <p>If you already have an account <Link to="/login">Login Here</Link>.</p>
             
         </Container>
   );
