@@ -10,6 +10,7 @@ const Post = require('../../models/Post');
 // @access  Public
 router.get('/', (req, res) => {
     Post.find()
+        .populate('author', 'name')
         .sort({created_at: -1})
         .then(posts => res.json(posts))
         .catch(err => res.status(404));

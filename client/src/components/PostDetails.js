@@ -31,11 +31,6 @@ class PostDetails extends Component {
             const { post } = this.props.post;
             const { author } = this.props.post.post;
 
-            const date1 = new Date(post.created_at);
-            const created_at= date1.toLocaleString();
-            const date2 = new Date(post.updated_at);
-            const updated_at= date2.toLocaleString();
-
             const buttons = (
                 <Fragment>
                     <Button
@@ -69,8 +64,8 @@ class PostDetails extends Component {
                     <h1>{post.title}</h1>
                     <p className="mt-4 mb-4">{post.body}</p>
                     <small>Author: {author.name}</small><br/>
-                    <small>Created on: {created_at}</small><br/>
-                    <small>Last update: {updated_at}</small>
+                    <small>Created on: {new Date(post.created_at).toLocaleString()}</small><br/>
+                    <small>Last update: {new Date(post.updated_at).toLocaleString()}</small>
                 </Fragment>
             )
         } else {

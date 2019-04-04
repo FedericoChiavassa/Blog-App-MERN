@@ -24,7 +24,7 @@ class UserPosts extends Component {
         return(   
             <ListGroup>
                 {posts.map(({_id, title}) => ( 
-                    <ListGroupItem key={_id}>
+                    <ListGroupItem key={_id} style={{ backgroundColor: '#f9f9f9' }}>
                         <Link to={{
                             pathname: `/posts/${_id}`,
                             state: { from: '/dashboard' }

@@ -29,13 +29,14 @@ class PostsList extends Component {
 
         return(
             <Fragment>
-                <ListGroup>
-                    {posts.map(({_id, title}) => (
-                        <ListGroupItem key={_id}>
+                <ListGroup className="mb-5">
+                    {posts.map(post => (
+                        <ListGroupItem key={post._id} style={{ backgroundColor: '#f9f9f9' }}>
                             <Link to={{
-                                pathname: `/posts/${_id}`,
+                                pathname: `/posts/${post._id}`,
                                 state: { from: '/posts' }
-                            }}>{title}</Link>
+                            }}>{post.title}</Link>
+                            <br/><small>written on: {new Date(post.created_at).toLocaleString()} by: {post.author.name} </small>
                         </ListGroupItem>
                     ))}
                 </ListGroup>
