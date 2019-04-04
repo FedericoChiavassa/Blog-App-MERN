@@ -2,13 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem, Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
-import { getPosts, deletePost } from '../actions/postActions';
+import { getPostsOfPage, deletePost } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
 class PostsList extends Component {
 
     componentDidMount() {
-        this.props.getPosts();
+        this.props.getPostsOfPage(this.props.page);
     }
 
     onDeleteClick = (id) => {
@@ -46,15 +46,16 @@ class PostsList extends Component {
 }
 
 PostsList.propTypes = {
-    getPosts: PropTypes.func.isRequired,
+    getPostsOfPage: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownParams) => ({
     post: state.post,
-    auth: state.auth
+    auth: state.auth,
+    page: ownParams.page
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost })(PostsList);
+export default connect(mapStateToProps, { getPostsOfPage, deletePost })(PostsList);

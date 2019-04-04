@@ -1,9 +1,12 @@
-import { GET_POSTS, GET_POST, ADD_POST, UPDATE_POST, DELETE_POST, POSTS_LOADING, CLEAR_POST_STATE, GET_USER_POSTS } from '../actions/types';
+import { GET_POSTS, GET_POST, ADD_POST, UPDATE_POST, DELETE_POST, POSTS_LOADING, CLEAR_POST_STATE, GET_USER_POSTS, GET_POSTS_PER_PAGE } from '../actions/types';
 
 const initialState = {
     posts: [],
     post: {},
-    loading: false
+    loading: false,
+    hasPrevPage: false,
+    hasNextPage: false,
+    totalPages: 9999
 }
 
 export default function(state = initialState, action) {
@@ -14,6 +17,15 @@ export default function(state = initialState, action) {
                 ...state,
                 posts: action.payload,
                 loading: false
+            };
+        case GET_POSTS_PER_PAGE:
+            return {
+                ...state,
+                posts: action.payload.docs,
+                loading: false,
+                hasPrevPage: action.payload.hasPrevPage,
+                hasNextPage: action.payload.hasNextPage,
+                totalPages: action.payload.totalPages
             };
         case GET_POST:
             return {

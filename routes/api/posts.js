@@ -16,6 +16,20 @@ router.get('/', (req, res) => {
         .catch(err => res.status(404));
 });
 
+// @route   GET api/posts/page:id
+// @desc    Get Posts per page
+// @access  Public
+router.get('/page:id', (req, res) => {
+    Post.paginate({}, { 
+            populate: {path: 'author', select: 'name'},
+            sort:{created_at: -1}, 
+            page: req.params.id, 
+            limit: 3
+        })   
+        .then(posts => res.json(posts))
+        .catch(err => res.status(404));
+});
+
 // @route   GET api/posts/user/:id
 // @desc    Get User Posts
 // @access  Public

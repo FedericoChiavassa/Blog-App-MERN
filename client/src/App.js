@@ -43,6 +43,7 @@ class App extends Component {
                         <Route exact path='/login' component={LoginPage} />
                         <Route exact path='/register' component={RegisterPage} />
                         <Route exact path='/posts' component={PostsPage} />
+                        <Route exact path='/posts/page:id' component={PostsPage} />
                         <PrivateRoute exact path='/posts/create-post' component={NewPostPage} />
                         <PrivateRoute exact path='/posts/:id/edit' component={UpdatePostPage} />
                         <Route exact path='/posts/:id'  component={PostPage} />

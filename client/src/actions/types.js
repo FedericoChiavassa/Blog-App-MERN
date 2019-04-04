@@ -1,4 +1,5 @@
 export const GET_POSTS = 'GET_POSTS';
+export const GET_POSTS_PER_PAGE = 'GET_POSTS_PER_PAGE';
 export const GET_USER_POSTS = 'GET_USER_POSTS';
 export const GET_POST = 'GET_POST';
 export const ADD_POST = 'ADD_POST';
