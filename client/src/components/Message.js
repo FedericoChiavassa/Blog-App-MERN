@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { clearMessage } from '../actions/messageActions';
 import PropTypes from 'prop-types';
 
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 class Message extends Component {
 

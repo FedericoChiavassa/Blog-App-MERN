@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Container, Button } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import PostsList from '../PostsList';
+import Pagination from '../layout/Pagination';
 
 function PostsPage({ auth, match, post }) {
-  const id = match.params.id;
+  const id = match.params.id || 1;
   const button = (
     <Button
         tag={Link}
@@ -18,7 +19,7 @@ function PostsPage({ auth, match, post }) {
     >+ New Post</Button>
   );
 
-  if((isNaN(id) && id) ||  id > post.totalPages) {
+  if(isNaN(id) || id > post.totalPages ||  id < 1) {
       return <Redirect to="/posts" />
   }
 
@@ -26,6 +27,7 @@ function PostsPage({ auth, match, post }) {
     <Container>
         <h1 className="mb-4 d-inline-block">Posts</h1>
         {auth.isAuthenticated ? button : null}
+        <Pagination page={parseInt(id)}/>
         <PostsList page={id} />
     </Container>
   );

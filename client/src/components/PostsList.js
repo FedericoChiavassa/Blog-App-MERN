@@ -11,6 +11,13 @@ class PostsList extends Component {
         this.props.getPostsOfPage(this.props.page);
     }
 
+    componentDidUpdate(prevProps) {
+        const { page } = this.props;
+        if(page !== prevProps.page) {
+            this.props.getPostsOfPage(page);
+        }
+    }
+
     onDeleteClick = (id) => {
         this.props.deletePost(id)
     }
@@ -18,6 +25,7 @@ class PostsList extends Component {
     render() {
         if(this.props.post.loading) return <Spinner style={{display: 'block'}} color="primary" />;
         const { posts } = this.props.post;
+        const { page } = this.props;
         const { isAuthenticated } = this.props.auth;
 
         if(posts.length < 1) {
@@ -34,7 +42,7 @@ class PostsList extends Component {
                         <ListGroupItem key={post._id} style={{ backgroundColor: '#f9f9f9' }}>
                             <Link to={{
                                 pathname: `/posts/${post._id}`,
-                                state: { from: '/posts' }
+                                state: { from: `/posts/page${page}` }
                             }}>{post.title}</Link>
                             <br/><small>written on: {new Date(post.created_at).toLocaleString()} by: {post.author.name} </small>
                         </ListGroupItem>

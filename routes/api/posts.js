@@ -24,7 +24,7 @@ router.get('/page:id', (req, res) => {
             populate: {path: 'author', select: 'name'},
             sort:{created_at: -1}, 
             page: req.params.id, 
-            limit: 3
+            limit: 5
         })   
         .then(posts => res.json(posts))
         .catch(err => res.status(404));
