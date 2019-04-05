@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Button } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
-import PostsList from '../PostsList';
+import PostsList from '../post/PostsList';
 import Pagination from '../layout/Pagination';
 
 function PostsPage({ auth, match, post }) {

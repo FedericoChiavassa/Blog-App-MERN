@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import UpdatePostForm from '../UpdatePostForm';
+import UpdatePostForm from '../post/UpdatePostForm';
 
 function EditPostPage({match, history, location}) {
   return (     

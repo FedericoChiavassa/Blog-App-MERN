@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem, Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
-import { getPostsOfPage, deletePost } from '../actions/postActions';
+import { getPostsOfPage, deletePost } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 
 class PostsList extends Component {

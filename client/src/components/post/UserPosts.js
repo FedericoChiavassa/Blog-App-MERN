@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem, Button, Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
-import { getUserPosts, deletePost } from '../actions/postActions';
+import { getUserPosts, deletePost } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 
 class UserPosts extends Component {
@@ -22,7 +22,7 @@ class UserPosts extends Component {
         if(posts.length < 1) return (<p>You don't have any post yet.</p>);
 
         return(   
-            <ListGroup>
+            <ListGroup className="mb-5">
                 {posts.map(({_id, title}) => ( 
                     <ListGroupItem key={_id} style={{ backgroundColor: '#f9f9f9' }}>
                         <Link to={{

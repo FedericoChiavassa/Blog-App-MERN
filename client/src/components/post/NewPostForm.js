@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, FormGroup, Label, Input, Spinner, Alert  } from 'reactstrap';
-import { getPost, updatePost, clearPostState } from '../actions/postActions';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { addPost, clearPostState } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 
-class UpdatePostForm extends Component {
+class NewPostForm extends Component {
     
     state = {
         title: "",
         body: ""
-    }
-
-    componentDidMount() {
-        this.props.getPost(this.props.id);
-        const { post } = this.props.post;
-        this.setState({
-            title: post.title,
-            body: post.body
-        });
     }
 
     componentWillUnmount() {
@@ -31,7 +22,7 @@ class UpdatePostForm extends Component {
         const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
         const { title, body } = this.state;
         const post = { title, body };
-        this.props.updatePost(this.props.id, post);
+        this.props.addPost(post);
         this.setState({
             title: '',
             body: ''
@@ -40,15 +31,6 @@ class UpdatePostForm extends Component {
     }
 
     render() {
-        if(this.props.post.loading || this.props.auth.isLoading) return <Spinner color="primary" />;
-        
-        const { title, body, author } = this.props.post.post;
-        const { user } = this.props.auth;
-
-        if (author && user) {
-            if(author._id !== user._id) return <Alert color="danger">Only the author can update this post. </Alert>;
-        }
-
         return(
             <Form onSubmit={this.submitPost}>
                 <FormGroup>
@@ -57,7 +39,7 @@ class UpdatePostForm extends Component {
                         type="text"
                         name="title"
                         onChange={this.onChange}
-                        defaultValue={title}
+                        value={this.state.title}
                         placeholder="Title..." />
                 </FormGroup>
                 <FormGroup>
@@ -67,35 +49,28 @@ class UpdatePostForm extends Component {
                         name="body"
                         id="body"
                         onChange={this.onChange}
-                        defaultValue={body}
+                        value={this.state.body}
                         placeholder="Body..." 
                         rows="10"/>
                 </FormGroup>
                 <FormGroup>
-                    <Button type="submit" >Save Changes</Button>
+                    <Button type="submit" >Create Post</Button>
                 </FormGroup>
             </Form>
         )
     }
 }
 
-UpdatePostForm.propTypes = {
-    getPost: PropTypes.func.isRequired,
-    updatePost: PropTypes.func.isRequired,
+NewPostForm.propTypes = {
+    addPost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    id: PropTypes.string,
     location: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownParams) => ({
-    auth: state.auth,
-    post: state.post,
     history: ownParams.history,
-    id: ownParams.id,
     location: ownParams.location
 });
 
-export default connect(mapStateToProps, { getPost, updatePost, clearPostState })(UpdatePostForm);
+export default connect(mapStateToProps, { addPost, clearPostState })(NewPostForm);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import UserPosts from '../UserPosts';
+import UserPosts from '../post/UserPosts';
 
 function DashboardPage() {
   return (         

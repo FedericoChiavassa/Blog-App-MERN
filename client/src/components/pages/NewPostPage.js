@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import NewPostForm from '../NewPostForm';
+import NewPostForm from '../post/NewPostForm';
 
 function NewPostPage({history, location}) {
   return (     

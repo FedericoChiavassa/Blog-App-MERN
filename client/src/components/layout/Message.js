@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Alert } from 'reactstrap';
 import { connect } from 'react-redux';
-import { clearMessage } from '../actions/messageActions';
+import { clearMessage } from '../../actions/messageActions';
 import PropTypes from 'prop-types';
 
 import { withRouter } from 'react-router-dom';

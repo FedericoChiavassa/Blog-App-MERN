@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import AppNavbar from './components/AppNavbar';
 import PrivateRoute from './components/auth/PrivateRoute';
+
+import AppNavbar from './components/layout/AppNavbar';
+import Message from './components/layout/Message';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
@@ -22,7 +24,6 @@ import { loadUser } from './actions/authActions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import Message from './components/Message';
 
 class App extends Component {
   componentDidMount() {

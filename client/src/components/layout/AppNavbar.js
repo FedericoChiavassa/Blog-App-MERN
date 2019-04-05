@@ -16,7 +16,7 @@ import {
     DropdownItem,
     Container
 } from 'reactstrap';
-import Logout from './auth/Logout';
+import Logout from '../auth/Logout';
 
 class AppNavbar extends Component {
     state = {

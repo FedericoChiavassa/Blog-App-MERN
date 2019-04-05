@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Spinner, Button } from 'reactstrap';
-import { getPost, deletePost, clearPostState } from '../actions/postActions';
+import { getPost, deletePost, clearPostState } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 
 class PostDetails extends Component {
