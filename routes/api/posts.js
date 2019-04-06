@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
+const imgUpload = require('../../middleware/imgUpload');
 
 // Post Model
 const Post = require('../../models/Post');
@@ -43,10 +44,11 @@ router.get('/user/:id', (req, res) => {
 // @route   POST api/posts
 // @desc    Create a Post
 // @access  Private
-router.post('/', auth, (req, res) => {
+router.post('/', auth, imgUpload.single('postImage'), (req, res) => {
     const newPost = new Post({
         title: req.body.title,
         body: req.body.body,
+        image: "noimage",
         author: req.user.id
     });
 
@@ -96,6 +98,13 @@ router.delete('/:id', auth, (req, res) => {
             }
         })
         .catch(err => res.status(404).json({success: false}));
+});
+
+// @route   POST api/posts/upload
+// @desc    TEST Upload an image
+// @access  Public
+router.post('/upload', imgUpload.single('postImage'), (req, res) => {
+    res.json({name: req.file.filename, path: req.file.originalname});
 });
 
 

@@ -10,6 +10,10 @@ app.use(express.json());
 // DB Config
 const db = config.get('mongoURI');
 
+// Set static folder
+app.use(express.static('public'));
+app.use('/public', express.static('public'));
+
 // Connect to Mongo
 mongoose.connect(db, {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false })
     .then(() => console.log('MongoDB Connected...'))

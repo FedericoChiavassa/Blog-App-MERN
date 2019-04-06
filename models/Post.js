@@ -12,6 +12,9 @@ const PostSchema = new Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String
+    },
     author: { 
         type: Schema.Types.ObjectId, ref: 'user',
         required: true
