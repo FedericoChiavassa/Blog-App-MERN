@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, FormGroup, Label, Input, Spinner, Alert  } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Spinner, Alert, FormText  } from 'reactstrap';
 import { getPost, updatePost, clearPostState } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 
@@ -16,7 +16,8 @@ class UpdatePostForm extends Component {
         const { post } = this.props.post;
         this.setState({
             title: post.title,
-            body: post.body
+            body: post.body,
+            // image: post.image
         });
     }
 
@@ -30,7 +31,13 @@ class UpdatePostForm extends Component {
         e.preventDefault();
         const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
         const { title, body } = this.state;
-        const post = { title, body };
+        const image =  e.target.image.files[0];
+
+        const post = new FormData();
+        if(image) post.append('image', image);
+        post.append('title', title);
+        post.append('body', body);
+
         this.props.updatePost(this.props.id, post);
         this.setState({
             title: '',
@@ -70,6 +77,15 @@ class UpdatePostForm extends Component {
                         defaultValue={body}
                         placeholder="Body..." 
                         rows="10"/>
+                </FormGroup>
+                <FormGroup>
+                    <Input 
+                        type="file" 
+                        name="image"
+                        innerRef={this.fileInput} />
+                    <FormText color="muted">
+                        You can choose a new image for your post.
+                    </FormText>
                 </FormGroup>
                 <FormGroup>
                     <Button type="submit" >Save Changes</Button>

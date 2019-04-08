@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, FormText, Label, Input } from 'reactstrap';
 import { addPost, clearPostState } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 
-class NewPostForm extends Component {
-    
+class NewPostForm extends Component { 
     state = {
         title: "",
         body: ""
@@ -21,7 +20,13 @@ class NewPostForm extends Component {
         e.preventDefault();
         const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
         const { title, body } = this.state;
-        const post = { title, body };
+        const image =  e.target.image.files[0];
+
+        const post = new FormData();
+        post.append('image', image);
+        post.append('title', title);
+        post.append('body', body);
+
         this.props.addPost(post);
         this.setState({
             title: '',
@@ -47,13 +52,21 @@ class NewPostForm extends Component {
                     <Input 
                         type="textarea"
                         name="body"
-                        id="body"
                         onChange={this.onChange}
                         value={this.state.body}
                         placeholder="Body..." 
                         rows="10"/>
                 </FormGroup>
                 <FormGroup>
+                    <Input 
+                        type="file" 
+                        name="image"
+                        innerRef={this.fileInput} />
+                    <FormText color="muted">
+                        You can choose an image for your post.
+                    </FormText>
+                </FormGroup>
+                <FormGroup className="mt-5">
                     <Button type="submit" >Create Post</Button>
                 </FormGroup>
             </Form>

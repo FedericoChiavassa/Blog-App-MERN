@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { unlink } = require('fs');
 const auth = require('../../middleware/auth');
 const imgUpload = require('../../middleware/imgUpload');
 
@@ -25,7 +26,7 @@ router.get('/page:id', (req, res) => {
             populate: {path: 'author', select: 'name'},
             sort:{created_at: -1}, 
             page: req.params.id, 
-            limit: 5
+            limit: 4
         })   
         .then(posts => res.json(posts))
         .catch(err => res.status(404));
@@ -44,11 +45,11 @@ router.get('/user/:id', (req, res) => {
 // @route   POST api/posts
 // @desc    Create a Post
 // @access  Private
-router.post('/', auth, imgUpload.single('postImage'), (req, res) => {
+router.post('/', auth, imgUpload.single('image'), (req, res) => {
     const newPost = new Post({
         title: req.body.title,
         body: req.body.body,
-        image: "noimage",
+        image: req.file ? req.file.path : "public/images/noimage.jpg",
         author: req.user.id
     });
 
@@ -67,16 +68,29 @@ router.get('/:id', (req, res) => {
 // @route   PUT api/posts/:id
 // @desc    Update a Post
 // @access  Private
-router.put('/:id', auth, (req, res) => {
+router.put('/:id', auth, imgUpload.single('image'), (req, res) => {
     Post.findById(req.params.id)
         .then(post => {
             if(req.user.id == post.author) {
-                Post.findOneAndUpdate(
-                    {_id: req.params.id}, 
-                    req.body,
-                    {new: true}
-                )
-                .then(post => res.json(post))
+                if(req.file) {
+                    // A) If there is a new image
+                    req.body.image = req.file.path;           
+                    if(post.image !== "public/images/noimage.jpg") {
+                        // Delete old image if there is one
+                        unlink(post.image, () => {
+                            Post.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+                            .then(post => res.json(post))
+                        })
+                    } else {
+                        // Don't delete old image if there wasn't
+                        Post.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+                        .then(post => res.json(post))
+                    } 
+                }  else {
+                    // B) If there is NOT a new image
+                    Post.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+                    .then(post => res.json(post))
+                }        
             } else {
                 res.status(401).json({msg: 'Invalid user' });
             }
@@ -91,20 +105,20 @@ router.delete('/:id', auth, (req, res) => {
     Post.findById(req.params.id)
         .then(post => {
             if(req.user.id == post.author) {
-               post.remove().then(() => res.json({success: true})) 
+                if(post.image !== "public/images/noimage.jpg") {
+                    // Delete image if there is one
+                    unlink(post.image, () => {
+                        post.remove().then(() => res.json({success: true}))
+                    })
+                } else {
+                    post.remove().then(() => res.json({success: true})) 
+                }
             }
             else {
                 res.status(401).json({success: false});
             }
         })
         .catch(err => res.status(404).json({success: false}));
-});
-
-// @route   POST api/posts/upload
-// @desc    TEST Upload an image
-// @access  Public
-router.post('/upload', imgUpload.single('postImage'), (req, res) => {
-    res.json({name: req.file.filename, path: req.file.originalname});
 });
 
 

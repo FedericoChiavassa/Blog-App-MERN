@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { ListGroup, ListGroupItem, Spinner } from 'reactstrap';
+import { ListGroup, ListGroupItem, Spinner, Media } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getPostsOfPage, deletePost } from '../../actions/postActions';
 import PropTypes from 'prop-types';
@@ -40,6 +40,15 @@ class PostsList extends Component {
                 <ListGroup className="mb-5">
                     {posts.map(post => (
                         <ListGroupItem key={post._id} style={{ backgroundColor: '#f9f9f9' }}>
+                            <Media 
+                                tag={Link}
+                                to={{ pathname: `/posts/${post._id}`, state: { from: `/posts/page${page}` }}}
+                                className="mr-3 float-left">
+                                <img
+                                    src={'/' + post.image} style={imgStyle} 
+                                    className=" img-thumbnail"  
+                                    alt="PostImage" />
+                            </Media>
                             <Link to={{
                                 pathname: `/posts/${post._id}`,
                                 state: { from: `/posts/page${page}` }
@@ -51,6 +60,12 @@ class PostsList extends Component {
             </Fragment>
         )
     }
+}
+
+const imgStyle = {
+    width: '200px', 
+    maxHeight: '150px',
+    objectFit: 'cover'
 }
 
 PostsList.propTypes = {

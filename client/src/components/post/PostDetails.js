@@ -62,16 +62,25 @@ class PostDetails extends Component {
                     >← Go Back</Button>
                     { (isAuthenticated && author._id === user._id)  ? buttons : null }
                     <h1>{post.title}</h1>
+                    { post.image !== 'public/images/noimage.jpg' ? (<img style={imgStyle} src={'/' + post.image} alt="PostImage" className="mt-4"/>) : null }
                     <p className="mt-4 mb-4">{post.body}</p>
+                    <footer className="mb-5">
                     <small>Author: {author.name}</small><br/>
                     <small>Created on: {new Date(post.created_at).toLocaleString()}</small><br/>
                     <small>Last update: {new Date(post.updated_at).toLocaleString()}</small>
+                    </footer>
                 </Fragment>
             )
         } else {
             return <Spinner color="primary" />;
         }
     }
+}
+
+const imgStyle= {
+    width: '100%',
+    height: '350px',
+    objectFit: 'cover'
 }
 
 PostDetails.propTypes = {
