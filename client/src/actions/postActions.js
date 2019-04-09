@@ -60,9 +60,9 @@ export const addPost = (post) => (dispatch, getState) => {
             });
             dispatch(createMessage('New Post Created'));
         })
-        .catch(err => dispatch(
-            returnErrors(err.response.data, err.response.status)
-        ));
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+        });
 };
 
 export const getPost = (id) => (dispatch) => {

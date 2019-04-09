@@ -20,7 +20,16 @@ class Message extends Component {
     }
 
     render() {
-        const { msg } = this.props.message;
+        const { msg, type } = this.props.message;
+
+        if(type === "error") {
+            return(
+                <Fragment>
+                    { msg !== "" ? (<Alert className="mt-3 mb-4" color="danger">{msg}</Alert>) : null}
+                </Fragment>
+            )
+        }
+
         return(
             <Fragment>
                 { msg !== "" ? (<Alert className="mt-3 mb-4" color="success">{msg}</Alert>) : null}

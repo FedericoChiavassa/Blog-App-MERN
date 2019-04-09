@@ -5,7 +5,6 @@ import {
     FormGroup,
     Label,
     Input,
-    Alert,
     Spinner
 } from 'reactstrap';
 import { connect } from 'react-redux';
@@ -17,24 +16,15 @@ import { clearErrors } from "../../actions/errorActions";
 class Login extends Component {
     state = {
         email: '',
-        password: '',
-        msg: null
-    }
-
-    componentDidUpdate(prevProps) {
-        const { error} = this.props;
-        if(error !== prevProps.error) {
-            // Check for register error
-            if(error.id === 'LOGIN_FAIL') {
-                this.setState({msg: error.msg.msg});
-            } else {
-                this.setState({ msg: null });
-            }
-        }
+        password: ''
     }
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+    }
+    
+    componentWillUnmount() {
+        this.props.clearErrors();
     }
 
     onSubmit = (e) => {
@@ -63,7 +53,6 @@ class Login extends Component {
 
         return(
             <div>
-                { this.state.msg ? (<Alert className="mt-3 mb-3" color="danger">{this.state.msg}</Alert>) : null}
                 <Form onSubmit={this.onSubmit} className="mt-3">
                     <FormGroup>
                         <Label for="email">Email</Label>

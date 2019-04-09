@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormGroup, FormText, Label, Input } from 'reactstrap';
 import { addPost, clearPostState } from '../../actions/postActions';
+import { createMessage } from '../../actions/messageActions';
 import PropTypes from 'prop-types';
+
 
 class NewPostForm extends Component { 
     state = {
@@ -21,6 +23,10 @@ class NewPostForm extends Component {
         const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
         const { title, body } = this.state;
         const image =  e.target.image.files[0];
+        
+        if(title === "" || body === "") {
+           return this.props.createMessage('Please fill in all the fields!', "error");
+        }
 
         const post = new FormData();
         post.append('image', image);
@@ -77,6 +83,7 @@ class NewPostForm extends Component {
 NewPostForm.propTypes = {
     addPost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
+    createMessage: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
 }
@@ -86,4 +93,4 @@ const mapStateToProps = (state, ownParams) => ({
     location: ownParams.location
 });
 
-export default connect(mapStateToProps, { addPost, clearPostState })(NewPostForm);
+export default connect(mapStateToProps, { addPost, clearPostState, createMessage })(NewPostForm);

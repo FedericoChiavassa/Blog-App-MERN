@@ -5,7 +5,6 @@ import {
     FormGroup,
     Label,
     Input,
-    Alert,
     Spinner
 } from 'reactstrap';
 import { connect } from 'react-redux';
@@ -18,24 +17,15 @@ class Register extends Component {
     state = {
         name: '',
         email: '',
-        password: '',
-        msg: null
-    }
-
-    componentDidUpdate(prevProps) {
-        const { error } = this.props;
-        if(error !== prevProps.error) {
-            // Check for register error
-            if(error.id === 'REGISTER_FAIL') {
-                this.setState({msg: error.msg.msg});
-            } else {
-                this.setState({ msg: null });
-            }
-        }
+        password: ''
     }
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    componentWillUnmount() {
+        this.props.clearErrors();
     }
 
     onSubmit = (e) => {
@@ -52,7 +42,7 @@ class Register extends Component {
         
         // Attempt to register
         this.props.register(newUser);
-        // this.props.clearErrors();
+        this.props.clearErrors();
     }
 
     render() {
@@ -61,7 +51,6 @@ class Register extends Component {
 
         return(
             <div>
-                { this.state.msg ? (<Alert className="mt-3 mb-3" color="danger">{this.state.msg}</Alert>) : null}
                 <Form onSubmit={this.onSubmit}>
                     <FormGroup>
                         <Label for="name">Name</Label>

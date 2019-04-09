@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormGroup, Label, Input, Spinner, Alert, FormText  } from 'reactstrap';
 import { getPost, updatePost, clearPostState } from '../../actions/postActions';
+import { createMessage } from '../../actions/messageActions';
 import PropTypes from 'prop-types';
 
 class UpdatePostForm extends Component {
@@ -16,8 +17,7 @@ class UpdatePostForm extends Component {
         const { post } = this.props.post;
         this.setState({
             title: post.title,
-            body: post.body,
-            // image: post.image
+            body: post.body
         });
     }
 
@@ -32,6 +32,10 @@ class UpdatePostForm extends Component {
         const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
         const { title, body } = this.state;
         const image =  e.target.image.files[0];
+
+        if(title === "" || body === "") {
+            return this.props.createMessage('Please fill in all the fields!', "error");
+         }
 
         const post = new FormData();
         if(image) post.append('image', image);
@@ -99,6 +103,7 @@ UpdatePostForm.propTypes = {
     getPost: PropTypes.func.isRequired,
     updatePost: PropTypes.func.isRequired,
     clearPostState: PropTypes.func.isRequired,
+    createMessage: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
@@ -114,4 +119,4 @@ const mapStateToProps = (state, ownParams) => ({
     location: ownParams.location
 });
 
-export default connect(mapStateToProps, { getPost, updatePost, clearPostState })(UpdatePostForm);
+export default connect(mapStateToProps, { getPost, updatePost, clearPostState, createMessage })(UpdatePostForm);
