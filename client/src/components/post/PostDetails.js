@@ -16,8 +16,8 @@ class PostDetails extends Component {
     }
 
     onDeleteClick = (id) => {
-        this.props.deletePost(id);
-        this.props.history.goBack();
+        this.props.deletePost(id)
+        this.goBack();
     }
 
     goBack = () => {

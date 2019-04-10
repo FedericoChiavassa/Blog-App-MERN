@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem, Spinner, Media } from 'reactstrap';
 import { connect } from 'react-redux';
-import { getPostsOfPage, deletePost } from '../../actions/postActions';
+import { getPostsOfPage } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 
 class PostsList extends Component {
@@ -16,10 +16,6 @@ class PostsList extends Component {
         if(page !== prevProps.page) {
             this.props.getPostsOfPage(page);
         }
-    }
-
-    onDeleteClick = (id) => {
-        this.props.deletePost(id)
     }
 
     render() {
@@ -70,7 +66,6 @@ const imgStyle = {
 
 PostsList.propTypes = {
     getPostsOfPage: PropTypes.func.isRequired,
-    deletePost: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired
 }
@@ -81,4 +76,4 @@ const mapStateToProps = (state, ownParams) => ({
     page: ownParams.page
 });
 
-export default connect(mapStateToProps, { getPostsOfPage, deletePost })(PostsList);
+export default connect(mapStateToProps, { getPostsOfPage })(PostsList);

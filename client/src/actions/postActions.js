@@ -35,7 +35,6 @@ export const getUserPosts = (id) => dispatch => {
 };
 
 export const deletePost = (id) => (dispatch, getState) => {
-    dispatch(clearPostState());
     axios.delete(`/api/posts/${id}`, tokenConfig(getState))
     .then(res => {
         dispatch({
