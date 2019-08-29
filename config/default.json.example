@@ -1,5 +1,3 @@
-// Rename or copy this file as "default.json"
-
 {
     "mongoURI": "Insert mongoURI you get when creating your database",
     "jwtSecret": "Use-any-string-as-your-JwtSecret"
