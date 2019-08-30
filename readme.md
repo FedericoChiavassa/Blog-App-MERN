@@ -1,4 +1,4 @@
-# Blog App - Laravel & Vue.js
+# Blog App - MERN Stack
 
 > This is a blog application made with React, Node.js, Express.js and MongoDB.
 
